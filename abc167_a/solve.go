@@ -17,6 +17,15 @@ func Solve(S, T string) bool {
 	return strings.HasPrefix(T, S)
 }
 
+func Solve2(S, T string) bool {
+	for i := range S {
+		if S[i] != T[i] {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
 	S, T := scan.String(), scan.String()
 	if Solve(S, T) {
