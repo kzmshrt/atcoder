@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"math"
 	"math/big"
 	"os"
 	"sort"
@@ -30,10 +31,30 @@ func Solve(As []*big.Int) int {
 	return int(a.Int64())
 }
 
+func Solve2(As []int) int {
+	sort.Ints(As)
+	a := As[0]
+	if a == 0 {
+		return 0
+	}
+	for _, A := range As[1:] {
+		if A > math.MaxInt64/a {
+			return -1
+		}
+		a *= A
+		if a > 1e18 {
+			return -1
+		}
+	}
+	return a
+}
+
 func main() {
 	N := scan.Int()
-	As := scan.BigInts(N)
-	fmt.Println(Solve(As))
+	// As := scan.BigInts(N)
+	// fmt.Println(Solve(As))
+	As := scan.Ints(N)
+	fmt.Println(Solve2(As))
 }
 
 type scanner struct {
