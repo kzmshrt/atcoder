@@ -31,6 +31,39 @@ func Solve(As [][]int, bs map[int]bool) bool {
 	return false
 }
 
+func Solve2(As [][]int, bs map[int]bool) bool {
+	for y, r := range As {
+		for x, A := range r {
+			if bs[A] {
+				As[y][x] = 0
+			}
+		}
+	}
+	patterns := [][3][2]int{
+		{{0, 0}, {1, 1}, {2, 2}},
+		{{2, 0}, {1, 1}, {0, 2}},
+		{{0, 0}, {0, 1}, {0, 2}},
+		{{0, 0}, {1, 0}, {2, 0}},
+		{{1, 0}, {1, 1}, {1, 2}},
+		{{0, 1}, {1, 1}, {2, 1}},
+		{{2, 0}, {2, 1}, {2, 2}},
+		{{0, 2}, {1, 2}, {2, 2}},
+	}
+	for _, pattern := range patterns {
+		bingo := true
+		for _, p := range pattern {
+			if As[p[1]][p[0]] != 0 {
+				bingo = false
+				break
+			}
+		}
+		if bingo {
+			return true
+		}
+	}
+	return false
+}
+
 func main() {
 	As := make([][]int, 3, 3)
 	for i := range As {
@@ -41,7 +74,7 @@ func main() {
 	for i := 0; i < N; i++ {
 		bs[scan.Int()] = true
 	}
-	if Solve(As, bs) {
+	if Solve2(As, bs) {
 		fmt.Println("Yes")
 	} else {
 		fmt.Println("No")
