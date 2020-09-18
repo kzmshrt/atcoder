@@ -20,9 +20,17 @@ func Solve(S, T string) string {
 	return string(bytes)
 }
 
+func Solve2(S, T string) string {
+	bytes := make([]byte, 2*len(S), 2*len(S))
+	for i := 0; i < len(S); i++ {
+		bytes[2*i], bytes[2*i+1] = S[i], T[i]
+	}
+	return string(bytes)
+}
+
 func main() {
 	_, S, T := scan.Int(), scan.String(), scan.String()
-	fmt.Println(Solve(S, T))
+	fmt.Println(Solve2(S, T))
 }
 
 type scanner struct {
