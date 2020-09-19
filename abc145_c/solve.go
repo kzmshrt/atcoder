@@ -36,6 +36,21 @@ func ifact(x int) int {
 	return f
 }
 
+func Solve2(points [][2]float64) float64 {
+	n := len(points)
+	f := newFermat(n)
+	sum := 0.
+	for i := range points {
+		for j := range points {
+			if i == j {
+				continue
+			}
+			sum += float64(f.Get(n-1)) * math.Sqrt(math.Pow(points[i][0]-points[j][0], 2)+math.Pow(points[i][1]-points[j][1], 2))
+		}
+	}
+	return sum / float64(f.Get(n))
+}
+
 func main() {
 	N := scan.Int()
 	XYs := make([][2]float64, N, N)
