@@ -2,21 +2,19 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"math/big"
 	"os"
 	"strconv"
 )
 
-var sc = newScanner(os.Stdin)
+var scan = newScanner(os.Stdin)
 
-func Solve() int {
-	return 0
+func Solve() {
+	return
 }
 
 func main() {
-	fmt.Println(Solve())
 }
 
 type scanner struct {
@@ -115,16 +113,24 @@ func imin(x, y int) int {
 	return y
 }
 
-func ipow(x, p int) int {
-	if p == 0 {
+func ipow(x, n int) int {
+	if n == 0 {
 		return 1
 	}
-	a := ipow(x, p>>1)
+	a := ipow(x, n>>1)
 	a *= a
-	if p&1 != 0 {
+	if n&1 != 0 {
 		a *= x
 	}
 	return a
+}
+
+func isum(X []int) int {
+	s := 0
+	for _, x := range X {
+		s += x
+	}
+	return s
 }
 
 func chmax(x *int, v int) {
