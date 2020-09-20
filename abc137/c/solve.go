@@ -23,9 +23,7 @@ func main() {
 	}
 	c := 0
 	for _, v := range m {
-		if v > 1 {
-			c += (v) * (v - 1) / 2
-		}
+		c += (v) * (v - 1) / 2
 	}
 	fmt.Println(c)
 }
