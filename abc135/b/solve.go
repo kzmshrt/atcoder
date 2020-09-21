@@ -26,10 +26,20 @@ func solve(ps []int) bool {
 	return c <= 2
 }
 
+func solve2(ps []int) bool {
+	k := 0
+	for i, p := range ps {
+		if i != p-1 {
+			k++
+		}
+	}
+	return k <= 2
+}
+
 func main() {
 	N := scan.Int()
 	ps := scan.Ints(N)
-	if solve(ps) {
+	if solve2(ps) {
 		fmt.Println("YES")
 	} else {
 		fmt.Println("NO")
