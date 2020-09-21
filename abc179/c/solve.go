@@ -12,7 +12,15 @@ import (
 
 var scan = newScanner(os.Stdin)
 
-func Solve(N int) int {
+// func Solve(N int) int {
+// 	c := 0
+// 	for a := 1; a < N; a++ {
+// 		c += (N - 1) / a
+// 	}
+// 	return c
+// }
+
+func solve(N int) int {
 	c := 0
 	for a := 1; a < N; a++ {
 		c += (N - 1) / a
@@ -22,7 +30,7 @@ func Solve(N int) int {
 
 func main() {
 	N := scan.Int()
-	fmt.Println(Solve(N))
+	fmt.Println(solve(N))
 }
 
 type scanner struct {
