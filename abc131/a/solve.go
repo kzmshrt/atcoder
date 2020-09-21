@@ -7,6 +7,7 @@ import (
 	"io"
 	"math/big"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -23,9 +24,15 @@ func solve(S string) bool {
 	return len(m) == 2
 }
 
+func solve2(S string) bool {
+	s := []rune(S)
+	sort.Slice(s, func(i, j int) bool { return s[i] < s[j] })
+	return s[0] == s[1] && s[2] == s[3] && s[0] != s[2]
+}
+
 func main() {
 	S := scan.String()
-	if solve(S) {
+	if solve2(S) {
 		fmt.Println("Yes")
 	} else {
 		fmt.Println("No")
