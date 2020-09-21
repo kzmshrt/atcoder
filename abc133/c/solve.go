@@ -29,9 +29,25 @@ func solve(L, R int) int {
 	return min
 }
 
+func solve2(L, R int) int {
+	min := math.MaxInt64
+	for i := L; i <= R; i++ {
+		for j := L; j <= R; j++ {
+			if i == j {
+				continue
+			}
+			chmin(&min, (i%2019)*(j%2019)%2019)
+			if min == 0 {
+				return min
+			}
+		}
+	}
+	return min
+}
+
 func main() {
 	L, R := scan.Int(), scan.Int()
-	fmt.Println(solve(L, R))
+	fmt.Println(solve2(L, R))
 }
 
 type scanner struct {
