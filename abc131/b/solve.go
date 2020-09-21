@@ -23,10 +23,20 @@ func solve(ps []int) int {
 	return c
 }
 
+func solve2(ps []int) int {
+	c := 0
+	for i := 1; i < len(ps)-1; i++ {
+		if (ps[i-1] <= ps[i] && ps[i] <= ps[i+1]) || (ps[i-1] >= ps[i] && ps[i] >= ps[i+1]) {
+			c++
+		}
+	}
+	return c
+}
+
 func main() {
 	n := scan.Int()
 	ps := scan.Ints(n)
-	fmt.Println(solve(ps))
+	fmt.Println(solve2(ps))
 }
 
 type scanner struct {
