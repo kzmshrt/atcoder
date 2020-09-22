@@ -12,19 +12,17 @@ import (
 
 var scan = newScanner(os.Stdin)
 
-func solve(W, H, x, y float64) (float64, int) {
-	a := W * H / 2
-	b := 0
-	if x == W/2 && y == H/2 {
-		b = 1
-	}
-	return a, b
+func solve() {
 }
 
 func main() {
 	W, H, x, y := scan.Float64(), scan.Float64(), scan.Float64(), scan.Float64()
-	a, b := solve(W, H, x, y)
-	fmt.Printf("%.6f %d\n", a, b)
+	area := W * H / 2
+	b := 0
+	if x == W/2 && y == H/2 {
+		b = 1
+	}
+	fmt.Printf("%.6f %d\n", area, b)
 }
 
 type scanner struct {
