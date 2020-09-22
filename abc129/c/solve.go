@@ -9,6 +9,55 @@ import (
 	"strconv"
 )
 
+var scan = newScanner(os.Stdin)
+
+func solve(n int, b map[int]bool) int {
+	t := make([]mint, 100010, 100010)
+	t[0] = 1
+	for i := 0; i <= n; i++ {
+		if !b[i+1] {
+			t[i+1] = t[i+1].Add(t[i])
+		}
+		if !b[i+2] {
+			t[i+2] = t[i+2].Add(t[i])
+		}
+	}
+	return int(t[n])
+}
+
+func main1() {
+	scan := newScanner(os.Stdin)
+	n, m := scan.Int(), scan.Int()
+	b := map[int]bool{}
+	for i := 0; i < m; i++ {
+		b[scan.Int()] = true
+	}
+	fmt.Println(solve(n, b))
+}
+
+func solve2(N int, as map[int]bool) int {
+	t := make([]mint, N+1, N+1)
+	t[0] = newMint(1)
+	for i := 1; i < N+1; i++ {
+		if 1 < i && !as[i-2] {
+			t[i] = t[i].Add(t[i-2])
+		}
+		if !as[i-1] {
+			t[i] = t[i].Add(t[i-1])
+		}
+	}
+	return int(t[N])
+}
+
+func main() {
+	N, M := scan.Int(), scan.Int()
+	as := map[int]bool{}
+	for i := 0; i < M; i++ {
+		as[scan.Int()] = true
+	}
+	fmt.Println(solve2(N, as))
+}
+
 type scanner struct{ *bufio.Scanner }
 
 func newScanner(r io.Reader) *scanner {
@@ -148,28 +197,4 @@ func (f *factorial) Combination(n, k int) mint {
 		return 0
 	}
 	return f.fact[n].Mul(f.factInverse[k]).Mul(f.factInverse[n-k])
-}
-
-func solve(n int, b map[int]bool) int {
-	t := make([]mint, 100010, 100010)
-	t[0] = 1
-	for i := 0; i <= n; i++ {
-		if !b[i+1] {
-			t[i+1] = t[i+1].Add(t[i])
-		}
-		if !b[i+2] {
-			t[i+2] = t[i+2].Add(t[i])
-		}
-	}
-	return int(t[n])
-}
-
-func main() {
-	scan := newScanner(os.Stdin)
-	n, m := scan.Int(), scan.Int()
-	b := map[int]bool{}
-	for i := 0; i < m; i++ {
-		b[scan.Int()] = true
-	}
-	fmt.Println(solve(n, b))
 }
