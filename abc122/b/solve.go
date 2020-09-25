@@ -3,19 +3,31 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"math/big"
 	"os"
+	"regexp"
 	"strconv"
 )
 
 var scan = newScanner(os.Stdin)
 
-func solve() {
+func solve(S string) int {
+	max := 0
+	for i := 0; i < len(S); i++ {
+		for j := i; j < len(S); j++ {
+			if ok, _ := regexp.MatchString("^[ACGT]*$", S[i:j+1]); ok {
+				chmax(&max, j+1-i)
+			}
+		}
+	}
+	return max
 }
 
 func main() {
-	solve()
+	S := scan.String()
+	fmt.Println(solve(S))
 }
 
 type scanner struct {
