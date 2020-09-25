@@ -25,9 +25,22 @@ func solve(S string) int {
 	return max
 }
 
+func solve2(S string) int {
+	re := regexp.MustCompile("^[ACGT]*$")
+	max := 0
+	for i := 0; i < len(S); i++ {
+		for j := i; j < len(S); j++ {
+			if re.MatchString(S[i : j+1]) {
+				chmax(&max, j+1-i)
+			}
+		}
+	}
+	return max
+}
+
 func main() {
 	S := scan.String()
-	fmt.Println(solve(S))
+	fmt.Println(solve2(S))
 }
 
 type scanner struct {
