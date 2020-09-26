@@ -39,10 +39,26 @@ func solve2(As []int) int {
 	return res
 }
 
+func solve3(As []int) int {
+	l := 0
+	sort.Ints(As)
+	for l < len(As)-1 {
+		d := As[l]
+		for i := l + 1; i < len(As); i++ {
+			As[i] %= d
+			if As[i] == 0 {
+				l++
+			}
+		}
+		sort.Ints(As)
+	}
+	return As[l]
+}
+
 func main() {
 	N := scan.Int()
 	As := scan.Ints(N)
-	fmt.Println(solve2(As))
+	fmt.Println(solve3(As))
 }
 
 type scanner struct {
