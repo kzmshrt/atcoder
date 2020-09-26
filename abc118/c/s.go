@@ -31,10 +31,18 @@ func solve(As []int) int {
 	return -1
 }
 
+func solve2(As []int) int {
+	res := As[0]
+	for i := range As {
+		res = gcd(res, As[i])
+	}
+	return res
+}
+
 func main() {
 	N := scan.Int()
 	As := scan.Ints(N)
-	fmt.Println(solve(As))
+	fmt.Println(solve2(As))
 }
 
 type scanner struct {
