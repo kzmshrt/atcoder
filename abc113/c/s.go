@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"container/heap"
 	"fmt"
 	"io"
 	"math/big"
@@ -40,13 +41,74 @@ func solve(IPYC []*City) []string {
 	return codes
 }
 
-func main() {
-	_, M := scan.Int(), scan.Int()
-	IPYC := make([]*City, M, M)
-	for i := 0; i < M; i++ {
-		IPYC[i] = &City{i, scan.Int(), scan.Int(), ""}
+type City1 struct {
+	P int
+	Y int
+	C string
+}
+
+type CityHeap []*City1
+
+func (h CityHeap) Len() int { return len(h) }
+
+func (h CityHeap) Less(i, j int) bool { return h[i].Y < h[j].Y }
+
+func (h CityHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *CityHeap) Push(x interface{}) { *h = append(*h, x.(*City1)) }
+
+func (h *CityHeap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+func solve2(P, Y []int) []string {
+	m := map[int]CityHeap{}
+	l := make([]*City1, len(P), len(P))
+	for i := 0; i < len(P); i++ {
+		l[i] = &City1{P[i], Y[i], ""}
 	}
-	for _, v := range solve(IPYC) {
+	for i := 0; i < len(P); i++ {
+		if h, ok := m[P[i]]; ok {
+			heap.Push(&h, l[i])
+			m[P[i]] = h
+		} else {
+			h := CityHeap{l[i]}
+			m[P[i]] = h
+		}
+	}
+	for _, h := range m {
+		for i := 0; h.Len() > 0; i++ {
+			c := heap.Pop(&h).(*City1)
+			c.C = fmt.Sprintf("%06d%06d", c.P, i+1)
+		}
+	}
+	codes := make([]string, len(P), len(P))
+	for i, city := range l {
+		codes[i] = city.C
+	}
+	return codes
+}
+
+func main() {
+	// _, M := scan.Int(), scan.Int()
+	// IPYC := make([]*City, M, M)
+	// for i := 0; i < M; i++ {
+	// 	IPYC[i] = &City{i, scan.Int(), scan.Int(), ""}
+	// }
+	// for _, v := range solve(IPYC) {
+	// 	fmt.Println(v)
+	// }
+
+	_, M := scan.Int(), scan.Int()
+	P, Y := make([]int, M, M), make([]int, M, M)
+	for i := 0; i < M; i++ {
+		P[i], Y[i] = scan.Int(), scan.Int()
+	}
+	for _, v := range solve2(P, Y) {
 		fmt.Println(v)
 	}
 }
@@ -200,7 +262,7 @@ func factor(n int) map[int]int {
 	return m
 }
 
-// mint: https://github.com/atcoder/live_library/blob/master/mint.cpp
+// mint
 type mint int
 
 var mod = 1000000007
@@ -307,7 +369,7 @@ func (f *factorial) Combination(n, k int) mint {
 	return f.fact[n].Mul(f.factInverse[k]).Mul(f.factInverse[n-k])
 }
 
-// sieve: https://github.com/atcoder/live_library/blob/master/prime.cpp
+// sieve
 type sieve struct {
 	n          int
 	primes     []int
