@@ -12,20 +12,46 @@ import (
 
 var scan = newScanner(os.Stdin)
 
-func solve(N int) int {
-	d := ndigit(N)
+func EnumeratePatterns(X []int, d int) [][][]int {
+	makeCopy := func(X []int, cap int) []int {
+		return append(make([]int, 0, cap), X...)
+	}
+
 	s := make([][][]int, d, d)
-	s[0] = [][]int{{3}, {5}, {7}}
+	for _, x := range X {
+		s[0] = append(s[0], []int{x})
+	}
+
 	for i := 1; i < d; i++ {
 		for _, si := range s[i-1] {
-			for j := 3; j <= 7; j += 2 {
-				s[i] = append(s[i], append(append(make([]int, 0, len(si)+1), si...), j))
+			for _, x := range X {
+				s[i] = append(s[i], append(makeCopy(si, len(si)+1), x))
 			}
 		}
 	}
+
+	return s
+}
+
+func IntSliceToInt(X []int) int {
+	v := 0
+	for i, j := 0, len(X)-1; i < len(X); i, j = i+1, j-1 {
+		v += X[i] * ipow(10, j)
+	}
+	return v
+}
+
+func solve(N int) int {
+	// count the number of digits
+	d := ndigit(N)
+	// enumerate patterns for each num of digits
+	s := EnumeratePatterns([]int{3, 5, 7}, d)
+	// count valid patterns
 	c := 0
+	// start from 3 digits
 	for i := 2; i < d; i++ {
 		for _, si := range s[i] {
+			// check appearance of 3, 5, 7
 			k := 1
 			for _, v := range si {
 				k *= v
@@ -33,11 +59,8 @@ func solve(N int) int {
 			if k%3 != 0 || k%5 != 0 || k%7 != 0 {
 				continue
 			}
-			v := 0
-			for j := len(si) - 1; j >= 0; j-- {
-				v += si[j] * ipow(10, j)
-			}
-			if v <= N {
+			// compare
+			if IntSliceToInt(si) <= N {
 				c++
 			}
 		}
