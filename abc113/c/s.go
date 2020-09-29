@@ -20,7 +20,7 @@ type City struct {
 	C string
 }
 
-func solve(N int, IPYC []City) []string {
+func solve(IPYC []*City) []string {
 	sort.SliceStable(IPYC, func(i, j int) bool { return IPYC[i].Y < IPYC[j].Y })
 	sort.SliceStable(IPYC, func(i, j int) bool { return IPYC[i].P < IPYC[j].P })
 	before, x := -1, 0
@@ -41,12 +41,12 @@ func solve(N int, IPYC []City) []string {
 }
 
 func main() {
-	N, M := scan.Int(), scan.Int()
-	IPYC := make([]City, M, M)
+	_, M := scan.Int(), scan.Int()
+	IPYC := make([]*City, M, M)
 	for i := 0; i < M; i++ {
-		IPYC[i] = City{i, scan.Int(), scan.Int(), ""}
+		IPYC[i] = &City{i, scan.Int(), scan.Int(), ""}
 	}
-	for _, v := range solve(N, IPYC) {
+	for _, v := range solve(IPYC) {
 		fmt.Println(v)
 	}
 }
