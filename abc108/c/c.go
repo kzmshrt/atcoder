@@ -42,9 +42,18 @@ func solve2(N, K int) int {
 	return cnt
 }
 
+func solve3(N, K int) int {
+	a := N / K
+	if K%2 == 0 {
+		b := (N + (K / 2)) / K
+		return a*a*a + b*b*b
+	}
+	return a * a * a
+}
+
 func main() {
 	N, K := scan.Int(), scan.Int()
-	fmt.Println(solve2(N, K))
+	fmt.Println(solve3(N, K))
 }
 
 // scanner
