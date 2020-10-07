@@ -16,10 +16,8 @@ var scan = newScanner(os.Stdin)
 func solve(X int) int {
 	max := 1
 	for b := 2; b <= int(math.Sqrt(float64(X))); b++ {
-		p := 2
-		for v := ipow(b, p); v <= X; v = ipow(b, p) {
+		for p, v := 2, ipow(b, 2); v <= X; p, v = p+1, ipow(b, p) {
 			chmax(&max, v)
-			p++
 		}
 	}
 	return max
