@@ -1,3 +1,4 @@
+//go:generate echo ""
 package main
 
 import (
@@ -10,13 +11,15 @@ import (
 
 var scan = newScanner(os.Stdin)
 
-func Solve() {
-	return
+func solve() {
 }
 
 func main() {
+
+	solve()
 }
 
+// scanner
 type scanner struct {
 	*bufio.Scanner
 }
@@ -28,10 +31,7 @@ func newScanner(r io.Reader) *scanner {
 	return &scanner{s}
 }
 
-func (s *scanner) String() string {
-	s.Scan()
-	return s.Text()
-}
+func (s *scanner) String() string { s.Scan(); return s.Text() }
 
 func (s *scanner) Strings(l int) []string {
 	if l == 0 {
@@ -44,10 +44,7 @@ func (s *scanner) Strings(l int) []string {
 	return sl
 }
 
-func (s *scanner) Int() int {
-	n, _ := strconv.Atoi(s.String())
-	return n
-}
+func (s *scanner) Int() int { n, _ := strconv.Atoi(s.String()); return n }
 
 func (s *scanner) Ints(l int) []int {
 	if l == 0 {
@@ -60,12 +57,9 @@ func (s *scanner) Ints(l int) []int {
 	return sl
 }
 
-func (s *scanner) Float64() float64 {
-	f, _ := strconv.ParseFloat(s.String(), 64)
-	return f
-}
+func (s *scanner) Float64() float64 { f, _ := strconv.ParseFloat(s.String(), 64); return f }
 
-func (s *scanner) Floats64(l int) []float64 {
+func (s *scanner) Float64s(l int) []float64 {
 	if l == 0 {
 		return []float64{}
 	}
@@ -125,6 +119,14 @@ func ipow(x, n int) int {
 	return a
 }
 
+func ifact(x int) int {
+	f := 1
+	for i := 2; i <= x; i++ {
+		f *= i
+	}
+	return f
+}
+
 func isum(X []int) int {
 	s := 0
 	for _, x := range X {
@@ -133,17 +135,18 @@ func isum(X []int) int {
 	return s
 }
 
-func chmax(x *int, v int) {
-	if *x < v {
-		*x = v
+func chmax(x *int, v int) { *x = imax(*x, v) }
+
+func chmin(x *int, v int) { *x = imin(*x, v) }
+
+func gcd(a, b int) int {
+	if b == 0 {
+		return a
 	}
+	return gcd(b, a%b)
 }
 
-func chmin(x *int, v int) {
-	if *x > v {
-		*x = v
-	}
-}
+func lcm(a, b int) int { return a * b / gcd(a, b) }
 
 func factor(n int) map[int]int {
 	m := map[int]int{}
@@ -159,17 +162,65 @@ func factor(n int) map[int]int {
 	return m
 }
 
-var mod = 1000000007
-
-func setMintMod(x int) {
-	mod = x
+func perm(X []int) [][]int {
+	makeCopy := func(X []int) []int { return append(make([]int, 0, len(X)), X...) }
+	n := len(X)
+	c := makeCopy(X)
+	res := append(make([][]int, 0, ifact(n)), makeCopy(c))
+	p := make([]int, n+1, n+1)
+	for i := 0; i < n+1; i++ {
+		p[i] = i
+	}
+	for i := 1; i < n; {
+		p[i]--
+		j := 0
+		if i%2 == 1 {
+			j = p[i]
+		}
+		c[i], c[j] = c[j], c[i]
+		res = append(res, makeCopy(c))
+		for i = 1; p[i] == 0; i++ {
+			p[i] = i
+		}
+	}
+	return res
 }
 
+func ndigit(x int) int {
+	d := 0
+	for ; x > 0; x /= 10 {
+		d++
+	}
+	return d
+}
+
+// iheap
+type iheap []int
+
+func (h iheap) Len() int { return len(h) }
+
+func (h iheap) Less(i, j int) bool { return h[i] < h[j] }
+
+func (h iheap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *iheap) Push(x interface{}) { *h = append(*h, x.(int)) }
+
+func (h *iheap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+// mint
 type mint int
 
-func newMint(v int) mint {
-	return mint((v%mod + mod) % mod)
-}
+var mod = 1000000007
+
+func setMintMod(x int) { mod = x }
+
+func newMint(v int) mint { return mint((v%mod + mod) % mod) }
 
 func (x mint) Add(y mint) mint {
 	v := x + y
@@ -187,34 +238,27 @@ func (x mint) Sub(y mint) mint {
 	return v
 }
 
-func (x mint) Mul(y mint) mint {
-	return (x * y) % mint(mod)
-}
+func (x mint) Mul(y mint) mint { return (x * y) % mint(mod) }
 
-func (x mint) pow(n int) mint {
-	if n == 0 {
+func (x mint) Pow(p int) mint {
+	if p == 0 {
 		return mint(1)
 	}
-	a := x.pow(n >> 1)
+	a := x.Pow(p >> 1)
 	a = a.Mul(a)
-	if n&1 != 0 {
+	if p&1 != 0 {
 		a = a.Mul(x)
 	}
 	return a
 }
 
-func (x mint) Inverse() mint {
-	return x.pow(mod - 2)
-}
+func (x mint) Inverse() mint { return x.Pow(mod - 2) }
 
-func (x mint) Div(y mint) mint {
-	return x * y.Inverse()
-}
+func (x mint) Div(y mint) mint { return x.Mul(y.Inverse()) }
 
-func (x mint) Neg() mint {
-	return newMint(int(-x))
-}
+func (x mint) Neg() mint { return newMint(int(-x)) }
 
+// factorial
 type factorial struct {
 	fact        []mint
 	factInverse []mint
@@ -243,13 +287,9 @@ func (f *factorial) init(n int) {
 	f.factInverse = inv
 }
 
-func (f *factorial) Get(n int) mint {
-	return f.fact[n]
-}
+func (f *factorial) Get(n int) mint { return f.fact[n] }
 
-func (f *factorial) GetInverse(n int) mint {
-	return f.factInverse[n]
-}
+func (f *factorial) GetInverse(n int) mint { return f.factInverse[n] }
 
 func (f *factorial) Permutation(n, k int) mint {
 	if k < 0 || n < k {
@@ -265,6 +305,7 @@ func (f *factorial) Combination(n, k int) mint {
 	return f.fact[n].Mul(f.factInverse[k]).Mul(f.factInverse[n-k])
 }
 
+// sieve
 type sieve struct {
 	n          int
 	primes     []int
@@ -298,9 +339,7 @@ func (s *sieve) init() {
 	}
 }
 
-func (s *sieve) IsPrime(x int) bool {
-	return s.maxFactors[x] == x
-}
+func (s *sieve) IsPrime(x int) bool { return s.maxFactors[x] == x }
 
 func (s *sieve) Factor(x int) map[int]int {
 	m := map[int]int{}
