@@ -11,12 +11,7 @@ import (
 
 var scan = newScanner(os.Stdin)
 
-func solve() {
-}
-
 func main() {
-
-	solve()
 }
 
 // scanner
