@@ -13,12 +13,21 @@ import (
 var scan = newScanner(os.Stdin)
 
 func main() {
-	for i, c := range scan.String() {
+	// for i, c := range scan.String() {
+	// 	if i%2 == 0 {
+	// 		fmt.Print(string(c))
+	// 	}
+	// }
+	// fmt.Println()
+
+	s := scan.String()
+	a := make([]rune, 0, (len(s)+1)/2)
+	for i, c := range s {
 		if i%2 == 0 {
-			fmt.Print(string(c))
+			a = append(a, c)
 		}
 	}
-	fmt.Println()
+	fmt.Println(string(a))
 }
 
 // scanner
