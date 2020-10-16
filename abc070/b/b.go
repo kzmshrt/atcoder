@@ -84,6 +84,18 @@ func (s *scanner) BigInts(l int) []*big.Int {
 	return sl
 }
 
+func chmax(x *int, v int) {
+	if *x < v {
+		*x = v
+	}
+}
+
+func chmin(x *int, v int) {
+	if *x > v {
+		*x = v
+	}
+}
+
 func iabs(x int) int {
 	if x < 0 {
 		return -x
@@ -91,18 +103,28 @@ func iabs(x int) int {
 	return x
 }
 
-func imax(x, y int) int {
-	if x > y {
-		return x
+func imax(X ...int) int {
+	max := X[0]
+	for _, x := range X[1:] {
+		chmax(&max, x)
 	}
-	return y
+	return max
 }
 
-func imin(x, y int) int {
-	if x < y {
-		return x
+func imin(X ...int) int {
+	min := X[0]
+	for _, x := range X[1:] {
+		chmin(&min, x)
 	}
-	return y
+	return min
+}
+
+func isum(X ...int) int {
+	s := 0
+	for _, x := range X {
+		s += x
+	}
+	return s
 }
 
 func ipow(x, n int) int {
@@ -125,18 +147,6 @@ func ifact(x int) int {
 	return f
 }
 
-func isum(X []int) int {
-	s := 0
-	for _, x := range X {
-		s += x
-	}
-	return s
-}
-
-func chmax(x *int, v int) { *x = imax(*x, v) }
-
-func chmin(x *int, v int) { *x = imin(*x, v) }
-
 func gcd(a, b int) int {
 	if b == 0 {
 		return a
@@ -144,7 +154,9 @@ func gcd(a, b int) int {
 	return gcd(b, a%b)
 }
 
-func lcm(a, b int) int { return a * b / gcd(a, b) }
+func lcm(a, b int) int {
+	return a * b / gcd(a, b)
+}
 
 func factor(n int) map[int]int {
 	m := map[int]int{}
