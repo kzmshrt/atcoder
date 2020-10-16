@@ -16,8 +16,7 @@ func main() {
 	N := scan.Int()
 	m := map[int]int{}
 	for i := 0; i < N; i++ {
-		a := scan.Int()
-		if a%4 == 0 {
+		if a := scan.Int(); a%4 == 0 {
 			m[2]++
 		} else if a%2 == 0 {
 			m[1]++
