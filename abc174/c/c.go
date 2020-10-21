@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"math/big"
 	"os"
@@ -12,6 +13,18 @@ import (
 var scan = newScanner(os.Stdin)
 
 func main() {
+	K := scan.Int()
+	setMintMod(K)
+	n := 0
+	for i := 0; i < K+1; i++ {
+		n = 10*n + 7
+		n %= K
+		if n == 0 {
+			fmt.Println(i + 1)
+			return
+		}
+	}
+	fmt.Println(-1)
 }
 
 // scanner
