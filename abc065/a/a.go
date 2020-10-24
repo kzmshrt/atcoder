@@ -14,7 +14,7 @@ var scan = newScanner(os.Stdin)
 
 func main() {
 	X, A, B := scan.Int(), scan.Int(), scan.Int()
-	if v := B - A; v < 0 {
+	if v := B - A; v <= 0 {
 		fmt.Println("delicious")
 	} else if v <= X {
 		fmt.Println("safe")
