@@ -5,17 +5,20 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"math"
 	"math/big"
 	"os"
 	"strconv"
-	"strings"
 )
 
 var scan = newScanner(os.Stdin)
 
 func main() {
-	A := scan.Int()
-	B, _ := strconv.Atoi(strings.ReplaceAll(scan.String(), ".", ""))
+	// A := scan.Int()
+	// B, _ := strconv.Atoi(strings.ReplaceAll(scan.String(), ".", ""))
+	// fmt.Println(A * B / 100)
+
+	A, B := scan.Int(), int(math.Trunc(scan.Float64()*100+0.001))
 	fmt.Println(A * B / 100)
 }
 
