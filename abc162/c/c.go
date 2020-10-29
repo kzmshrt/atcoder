@@ -23,12 +23,12 @@ func main() {
 	v := 0
 	for a := 1; a <= K; a++ {
 		for b := 1; b <= K; b++ {
+			abmin, abmax := a, b
+			if a > b {
+				abmin, abmax = b, a
+			}
+			ab := m[[2]int{abmin, abmax}]
 			for c := 1; c <= K; c++ {
-				abmin, abmax := a, b
-				if a > b {
-					abmin, abmax = b, a
-				}
-				ab := m[[2]int{abmin, abmax}]
 				abcmin, abcmax := ab, c
 				if ab > c {
 					abcmin, abcmax = c, ab
