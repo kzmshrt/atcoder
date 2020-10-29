@@ -12,28 +12,29 @@ import (
 
 var scan = newScanner(os.Stdin)
 
+func minmax(X [2]int) [2]int {
+	if X[0] < X[1] {
+		return X
+	}
+	return [2]int{X[1], X[0]}
+}
+
 func main() {
 	K := scan.Int()
 	m := map[[2]int]int{}
 	for i := 1; i <= K; i++ {
 		for j := i; j <= K; j++ {
-			m[[2]int{i, j}] = gcd(i, j)
+			v := gcd(i, j)
+			m[[2]int{i, j}] = v
+			m[[2]int{j, i}] = v
 		}
 	}
 	v := 0
 	for a := 1; a <= K; a++ {
 		for b := 1; b <= K; b++ {
-			abmin, abmax := a, b
-			if a > b {
-				abmin, abmax = b, a
-			}
-			ab := m[[2]int{abmin, abmax}]
+			ab := m[[2]int{a, b}]
 			for c := 1; c <= K; c++ {
-				abcmin, abcmax := ab, c
-				if ab > c {
-					abcmin, abcmax = c, ab
-				}
-				v += m[[2]int{abcmin, abcmax}]
+				v += m[[2]int{ab, c}]
 			}
 		}
 	}
