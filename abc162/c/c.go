@@ -24,21 +24,27 @@ func main() {
 	m := map[[2]int]int{}
 	for i := 1; i <= K; i++ {
 		for j := i; j <= K; j++ {
-			v := gcd(i, j)
-			m[[2]int{i, j}] = v
-			m[[2]int{j, i}] = v
+			m[[2]int{i, j}] = gcd(i, j)
 		}
 	}
-	v := 0
+	ans := 0
 	for a := 1; a <= K; a++ {
-		for b := 1; b <= K; b++ {
-			ab := m[[2]int{a, b}]
+		for b := a; b <= K; b++ {
+			v := 0
 			for c := 1; c <= K; c++ {
-				v += m[[2]int{ab, c}]
+				if ab := m[[2]int{a, b}]; ab < c {
+					v += m[[2]int{ab, c}]
+				} else {
+					v += m[[2]int{c, ab}]
+				}
 			}
+			if a != b {
+				v *= 2
+			}
+			ans += v
 		}
 	}
-	fmt.Println(v)
+	fmt.Println(ans)
 }
 
 // scanner
