@@ -28,7 +28,6 @@ func main() {
 			if i == 0 {
 				continue
 			}
-			a[i] = 0
 			i--
 		}
 	}
