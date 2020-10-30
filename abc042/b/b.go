@@ -9,6 +9,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 var scan = newScanner(os.Stdin)
@@ -17,10 +18,7 @@ func main() {
 	N, _ := scan.Int(), scan.Int()
 	Ss := scan.Strings(N)
 	sort.Strings(Ss)
-	for _, S := range Ss {
-		fmt.Print(S)
-	}
-	fmt.Println()
+	fmt.Println(strings.Join(Ss, ""))
 }
 
 // scanner
