@@ -3,11 +3,11 @@ package main
 
 import (
 	"bufio"
-	"container/heap"
 	"fmt"
 	"io"
 	"math/big"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -16,16 +16,12 @@ type Node struct {
 	Count  int
 }
 
-type Heap []*Node
+type Heap []string
 
-func (h Heap) Len() int { return len(h) }
-
-func (h Heap) Less(i, j int) bool { return h[i].String < h[j].String }
-
-func (h Heap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
-
-func (h *Heap) Push(x interface{}) { *h = append(*h, x.(*Node)) }
-
+func (h Heap) Len() int            { return len(h) }
+func (h Heap) Less(i, j int) bool  { return h[i] < h[j] }
+func (h Heap) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+func (h *Heap) Push(x interface{}) { *h = append(*h, x.(string)) }
 func (h *Heap) Pop() interface{} {
 	old := *h
 	n := len(old)
@@ -35,24 +31,24 @@ func (h *Heap) Pop() interface{} {
 }
 
 func main() {
-	// N := scan.Int()
-	// m := map[string]int{}
-	// ss := []string{}
-	// max := 0
-	// for i := 0; i < N; i++ {
-	// 	s := scan.String()
-	// 	m[s]++
-	// 	chmax(&max, m[s])
-	// }
-	// for s, c := range m {
-	// 	if c == max {
-	// 		ss = append(ss, s)
-	// 	}
-	// }
-	// sort.Strings(ss)
-	// for _, s := range ss {
-	// 	fmt.Println(s)
-	// }
+	N := scan.Int()
+	m := map[string]int{}
+	ss := []string{}
+	max := 0
+	for i := 0; i < N; i++ {
+		s := scan.String()
+		m[s]++
+		chmax(&max, m[s])
+	}
+	for s, c := range m {
+		if c == max {
+			ss = append(ss, s)
+		}
+	}
+	sort.Strings(ss)
+	for _, s := range ss {
+		fmt.Println(s)
+	}
 
 	// N := scan.Int()
 	// m := map[string]int{}
@@ -73,31 +69,26 @@ func main() {
 	// 	fmt.Println(nodes[i].String)
 	// }
 
-	N := scan.Int()
-	m := map[string]*Node{}
-	h := new(Heap)
-	max := 0
-	for i := 0; i < N; i++ {
-		S := scan.String()
-		n, ok := m[S]
-		if ok {
-			n.Count++
-		} else {
-			n = &Node{S, 1}
-			heap.Push(h, n)
-			m[S] = n
-		}
-		chmax(&max, n.Count)
-	}
-	for {
-		if h.Len() == 0 {
-			break
-		}
-		node := heap.Pop(h).(*Node)
-		if node.Count == max {
-			fmt.Println(node.String)
-		}
-	}
+	// N := scan.Int()
+	// m := map[string]int{}
+	// max := 0
+	// for i := 0; i < N; i++ {
+	// 	S := scan.String()
+	// 	m[S]++
+	// 	chmax(&max, m[S])
+	// }
+	// h := new(Heap)
+	// for S, c := range m {
+	// 	if c == max {
+	// 		heap.Push(h, S)
+	// 	}
+	// }
+	// for {
+	// 	if h.Len() == 0 {
+	// 		break
+	// 	}
+	// 	fmt.Println(heap.Pop(h).(string))
+	// }
 }
 
 var scan = newScanner(os.Stdin)
