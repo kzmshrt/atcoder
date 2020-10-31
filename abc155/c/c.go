@@ -11,28 +11,52 @@ import (
 	"strconv"
 )
 
-var scan = newScanner(os.Stdin)
+type Node struct {
+	String string
+	Count  int
+}
 
 func main() {
+	// N := scan.Int()
+	// m := map[string]int{}
+	// ss := []string{}
+	// max := 0
+	// for i := 0; i < N; i++ {
+	// 	s := scan.String()
+	// 	m[s]++
+	// 	chmax(&max, m[s])
+	// }
+	// for s, c := range m {
+	// 	if c == max {
+	// 		ss = append(ss, s)
+	// 	}
+	// }
+	// sort.Strings(ss)
+	// for _, s := range ss {
+	// 	fmt.Println(s)
+	// }
+
 	N := scan.Int()
 	m := map[string]int{}
-	ss := []string{}
-	max := 0
+	nodes := []Node{}
 	for i := 0; i < N; i++ {
-		s := scan.String()
-		m[s]++
-		chmax(&max, m[s])
-	}
-	for s, c := range m {
-		if c == max {
-			ss = append(ss, s)
+		S := scan.String()
+		index, ok := m[S]
+		if ok {
+			nodes[index].Count++
+		} else {
+			m[S] = len(nodes)
+			nodes = append(nodes, Node{S, 1})
 		}
 	}
-	sort.Strings(ss)
-	for _, s := range ss {
-		fmt.Println(s)
+	sort.SliceStable(nodes, func(i, j int) bool { return nodes[i].String < nodes[j].String })
+	sort.SliceStable(nodes, func(i, j int) bool { return nodes[i].Count > nodes[j].Count })
+	for i := 0; i < len(nodes) && nodes[i].Count == nodes[0].Count; i++ {
+		fmt.Println(nodes[i].String)
 	}
 }
+
+var scan = newScanner(os.Stdin)
 
 // scanner
 type scanner struct {
