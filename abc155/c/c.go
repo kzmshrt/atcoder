@@ -3,17 +3,35 @@ package main
 
 import (
 	"bufio"
+	"container/heap"
 	"fmt"
 	"io"
 	"math/big"
 	"os"
-	"sort"
 	"strconv"
 )
 
 type Node struct {
 	String string
 	Count  int
+}
+
+type Heap []*Node
+
+func (h Heap) Len() int { return len(h) }
+
+func (h Heap) Less(i, j int) bool { return h[i].String < h[j].String }
+
+func (h Heap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *Heap) Push(x interface{}) { *h = append(*h, x.(*Node)) }
+
+func (h *Heap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
 }
 
 func main() {
@@ -36,23 +54,49 @@ func main() {
 	// 	fmt.Println(s)
 	// }
 
+	// N := scan.Int()
+	// m := map[string]int{}
+	// nodes := []Node{}
+	// for i := 0; i < N; i++ {
+	// 	S := scan.String()
+	// 	index, ok := m[S]
+	// 	if ok {
+	// 		nodes[index].Count++
+	// 	} else {
+	// 		m[S] = len(nodes)
+	// 		nodes = append(nodes, Node{S, 1})
+	// 	}
+	// }
+	// sort.SliceStable(nodes, func(i, j int) bool { return nodes[i].String < nodes[j].String })
+	// sort.SliceStable(nodes, func(i, j int) bool { return nodes[i].Count > nodes[j].Count })
+	// for i := 0; i < len(nodes) && nodes[i].Count == nodes[0].Count; i++ {
+	// 	fmt.Println(nodes[i].String)
+	// }
+
 	N := scan.Int()
-	m := map[string]int{}
-	nodes := []Node{}
+	m := map[string]*Node{}
+	h := new(Heap)
+	max := 0
 	for i := 0; i < N; i++ {
 		S := scan.String()
-		index, ok := m[S]
+		n, ok := m[S]
 		if ok {
-			nodes[index].Count++
+			n.Count++
 		} else {
-			m[S] = len(nodes)
-			nodes = append(nodes, Node{S, 1})
+			n = &Node{S, 1}
+			heap.Push(h, n)
+			m[S] = n
 		}
+		chmax(&max, n.Count)
 	}
-	sort.SliceStable(nodes, func(i, j int) bool { return nodes[i].String < nodes[j].String })
-	sort.SliceStable(nodes, func(i, j int) bool { return nodes[i].Count > nodes[j].Count })
-	for i := 0; i < len(nodes) && nodes[i].Count == nodes[0].Count; i++ {
-		fmt.Println(nodes[i].String)
+	for {
+		if h.Len() == 0 {
+			break
+		}
+		node := heap.Pop(h).(*Node)
+		if node.Count == max {
+			fmt.Println(node.String)
+		}
 	}
 }
 
