@@ -11,16 +11,29 @@ import (
 )
 
 func main() {
-	primes := []int{2}
-	for i := 3; i <= 100003; i += 2 {
-		if f := factor(i); len(f) == 1 && f[i] == 1 {
-			primes = append(primes, i)
-		}
-	}
+	// 先に解答たりうる素数を全列挙しておく
+	// primes := []int{2}
+	// for i := 3; i <= 100003; i += 2 {
+	// 	if isPrime(i) {
+	// 		primes = append(primes, i)
+	// 	}
+	// }
+	// X := scan.Int()
+	// for _, prime := range primes {
+	// 	if X <= prime {
+	// 		fmt.Println(prime)
+	// 		return
+	// 	}
+	// }
+
+	// X から試す
 	X := scan.Int()
-	for _, prime := range primes {
-		if X <= prime {
-			fmt.Println(prime)
+	if X > 2 && X%2 == 0 {
+		X++
+	}
+	for i := X; i <= 100003; i += 2 {
+		if isPrime(i) {
+			fmt.Println(i)
 			return
 		}
 	}
@@ -206,4 +219,9 @@ func factor(n int) map[int]int {
 		m[n]++
 	}
 	return m
+}
+
+func isPrime(n int) bool {
+	f := factor(n)
+	return len(f) == 1 && f[n] == 1
 }
