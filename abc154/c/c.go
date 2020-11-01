@@ -22,6 +22,19 @@ func main() {
 		m[A] = true
 	}
 	fmt.Println("YES")
+
+	// N := scan.Int()
+	// l := ipow(10, 9)
+	// m := make([]bool, l, l)
+	// for i := 0; i < N; i++ {
+	// 	if A := scan.Int() - 1; m[A] {
+	// 		fmt.Println("NO")
+	// 		return
+	// 	} else {
+	// 		m[A] = true
+	// 	}
+	// }
+	// fmt.Println("YES")
 }
 
 var scan = newScanner(os.Stdin)
