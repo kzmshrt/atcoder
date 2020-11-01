@@ -11,18 +11,28 @@ import (
 )
 
 func main() {
+	// N := scan.Int()
+	// Ps, mins := make([]int, N, N), make([]int, N, N)
+	// P := scan.Int()
+	// Ps[0], mins[0] = P, P
+	// for i := 1; i < N; i++ {
+	// 	P := scan.Int()
+	// 	Ps[i], mins[i] = P, imin(P, mins[i-1])
+	// }
+	// c := 0
+	// for i := 0; i < N; i++ {
+	// 	if Ps[i] <= mins[i] {
+	// 		c++
+	// 	}
+	// }
+	// fmt.Println(c)
+
 	N := scan.Int()
-	Ps, mins := make([]int, N, N), make([]int, N, N)
-	P := scan.Int()
-	Ps[0], mins[0] = P, P
+	c, min := 1, scan.Int()
 	for i := 1; i < N; i++ {
-		P := scan.Int()
-		Ps[i], mins[i] = P, imin(P, mins[i-1])
-	}
-	c := 0
-	for i := 0; i < N; i++ {
-		if Ps[i] <= mins[i] {
+		if P := scan.Int(); P <= min {
 			c++
+			min = P
 		}
 	}
 	fmt.Println(c)
