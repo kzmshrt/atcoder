@@ -45,13 +45,11 @@ func solve(S string) bool {
 }
 
 func main() {
-	S := scan.String()
-	if solve(S) {
+	if S := scan.String(); solve(S) {
 		fmt.Println("Yes")
 	} else {
 		fmt.Println("No")
 	}
-	solve("13333335555599922444")
 }
 
 var scan = newScanner(os.Stdin)

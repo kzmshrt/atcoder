@@ -10,34 +10,41 @@ import (
 	"strconv"
 )
 
-func main() {
-	N := scan.Int()
-	xys := make([][]int, N, N)
-	for i := range xys {
-		xys[i] = []int{scan.Int(), scan.Int()}
-	}
+func solve(P [][2]float64) bool {
 	m := map[[3]float64]bool{}
-	for i := 0; i < len(xys); i++ {
-		for j := i + 1; j < len(xys); j++ {
-			dx, dy := xys[j][0]-xys[i][0], xys[j][1]-xys[i][1]
-			var unit [3]float64
+	for i, p1 := range P {
+		for _, p2 := range P[i+1:] {
+			dx, dy := p2[0]-p1[0], p2[1]-p1[1]
+			var id [3]float64
 			if dx == 0 {
-				unit = [3]float64{0, 1, float64(xys[i][0])}
+				id = [3]float64{0, 1, p1[0]}
 			} else if dy == 0 {
-				unit = [3]float64{1, 0, float64(xys[i][1])}
+				id = [3]float64{1, 0, p1[1]}
 			} else {
-				v := gcd(dx, dy)
-				slope := float64(dy) / float64(dx)
-				unit = [3]float64{float64(dx / v), float64(dy / v), float64(xys[i][1]) - slope*float64(xys[i][0])}
+				g := float64(gcd(int(dx), int(dy))) // gcd
+				s := dy / dx                        // slope
+				id = [3]float64{dx / g, dy / g, p1[1] - s*p1[0]}
 			}
-			if m[unit] {
-				fmt.Println("Yes")
-				return
+			if m[id] {
+				return true
 			}
-			m[unit] = true
+			m[id] = true
 		}
 	}
-	fmt.Println("No")
+	return false
+}
+
+func main() {
+	N := scan.Int()
+	P := make([][2]float64, N, N)
+	for i := range P {
+		P[i] = [2]float64{scan.Float64(), scan.Float64()}
+	}
+	if solve(P) {
+		fmt.Println("Yes")
+	} else {
+		fmt.Println("No")
+	}
 }
 
 var scan = newScanner(os.Stdin)
