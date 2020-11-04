@@ -12,10 +12,10 @@ import (
 )
 
 func main() {
-	_, S := scan.Int(), scan.String()
+	N, S := scan.Int(), scan.String()
 	min := strings.Count(S, "E")
 	cnt := min
-	for i := range S {
+	for i := 0; i < N; i++ {
 		if i > 0 && S[i-1] == 'W' {
 			cnt++
 		}
@@ -29,7 +29,6 @@ func main() {
 
 var scan = newScanner(os.Stdin)
 
-// scanner
 type scanner struct {
 	*bufio.Scanner
 }
