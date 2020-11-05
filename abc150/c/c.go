@@ -11,13 +11,13 @@ import (
 	"strconv"
 )
 
-func solve(chars string) []string {
+func generatePatterns(chars string) []string {
 	if len(chars) == 0 {
 		return []string{""}
 	}
 	var patterns []string
 	for i, c := range chars {
-		for _, s := range solve(chars[:i] + chars[i+1:]) {
+		for _, s := range generatePatterns(chars[:i] + chars[i+1:]) {
 			patterns = append(patterns, string(c)+s)
 		}
 	}
@@ -33,7 +33,7 @@ func main() {
 	for i := 0; i < N; i++ {
 		Q += string(rune(scan.Int() + 48))
 	}
-	patterns := solve(P)
+	patterns := generatePatterns(P)
 	sort.Strings(patterns)
 	a, b := 0, 0
 	for i, pattern := range patterns {
