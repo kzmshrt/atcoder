@@ -14,6 +14,7 @@ var scan = newScanner(os.Stdin)
 
 func solve(S string) int {
 	W, B := 0, 0
+	// 連続する文字を１文字でカウント
 	c := '0'
 	for _, v := range S {
 		if v != c {
