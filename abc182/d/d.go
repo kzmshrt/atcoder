@@ -14,23 +14,26 @@ var scan = newScanner(os.Stdin)
 
 func main() {
 	N := scan.Int()
-	cums, cumcums, maxs := make([]int, N, N), make([]int, N, N), make([]int, N, N)
-	cums[0] = scan.Int()
-	cumcums[0] = cums[0]
-	maxs[0] = cums[0]
-	max := 0
+	cum := scan.Int()
+	cumcum := cum
+	max := cum
+	ans := 0
+	v := cumcum
+	if 1 < N {
+		v += max
+	}
+	chmax(&ans, v)
 	for i := 1; i < N; i++ {
-		cums[i] = cums[i-1] + scan.Int()
-		cumcums[i] = cumcums[i-1] + cums[i]
-		maxs[i] = imax(maxs[i-1], cums[i])
-	}
-	for i, v := range cumcums {
-		if i < len(cums)-1 {
-			v += maxs[i]
+		cum += scan.Int()
+		cumcum += cum
+		max = imax(max, cum)
+		v := cumcum
+		if i+1 < N {
+			v += max
 		}
-		chmax(&max, v)
+		chmax(&ans, v)
 	}
-	fmt.Println(max)
+	fmt.Println(ans)
 }
 
 type scanner struct {
