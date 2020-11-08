@@ -14,22 +14,21 @@ var scan = newScanner(os.Stdin)
 
 func main() {
 	N := scan.Int()
-	As := make([]int, N, N)
-	maxs := make([]int, N, N)
-	As[0] = scan.Int()
-	maxs[0] = As[0]
+	cums, cumcums, maxs := make([]int, N, N), make([]int, N, N), make([]int, N, N)
+	cums[0] = scan.Int()
+	cumcums[0] = cums[0]
+	maxs[0] = cums[0]
+	max := 0
 	for i := 1; i < N; i++ {
-		As[i] = As[i-1] + scan.Int()
-		maxs[i] = imax(maxs[i-1], As[i])
+		cums[i] = cums[i-1] + scan.Int()
+		cumcums[i] = cumcums[i-1] + cums[i]
+		maxs[i] = imax(maxs[i-1], cums[i])
 	}
-	max, sum := 0, 0
-	for i, v := range As {
-		sum += v
-		tsum := sum
-		if i < len(As)-1 {
-			tsum += maxs[i]
+	for i, v := range cumcums {
+		if i < len(cums)-1 {
+			v += maxs[i]
 		}
-		chmax(&max, tsum)
+		chmax(&max, v)
 	}
 	fmt.Println(max)
 }
