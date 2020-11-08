@@ -14,23 +14,28 @@ import (
 var scan = newScanner(os.Stdin)
 
 func main() {
-	N := scan.Int()
-	nd := digitNum(N)
-	sd := digitSum(N)
-	min := nd
-	for mask := uint(0); mask < (1<<nd)-1; mask++ {
-		dsum := sd
-		for i := 0; i < nd; i++ {
+	N := scan.String()
+	dnum := len(N)
+	digits := make([]int, dnum, dnum)
+	dsum := 0
+	for i, digit := range N {
+		digits[i] = int(digit - '0')
+		dsum += digits[i]
+	}
+	min := dnum
+	for mask := uint(0); mask < (1<<dnum)-1; mask++ {
+		tmpDigitSum := dsum
+		for i := 0; i < dnum; i++ {
 			if (mask>>i)&1 == 0 {
 				continue
 			}
-			dsum -= N / ipow(10, i) % 10
+			tmpDigitSum -= digits[i]
 		}
-		if dsum%3 == 0 {
+		if tmpDigitSum%3 == 0 {
 			chmin(&min, bits.OnesCount(mask))
 		}
 	}
-	if min == nd {
+	if min == dnum {
 		fmt.Println(-1)
 	} else {
 		fmt.Println(min)
