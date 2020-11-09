@@ -34,9 +34,9 @@ func main() {
 	fmt.Println(p)
 }
 
-type scanner struct {
-	*bufio.Scanner
-}
+func debug(d ...interface{}) { fmt.Fprintln(os.Stderr, d...) }
+
+type scanner struct{ *bufio.Scanner }
 
 const maxBufSize = 600000
 
@@ -101,6 +101,9 @@ func chmax(x *int, v int) {
 }
 
 func imax(X ...int) int {
+	if len(X) == 0 {
+		return 0
+	}
 	max := X[0]
 	for _, x := range X[1:] {
 		chmax(&max, x)
@@ -115,6 +118,9 @@ func chmin(x *int, v int) {
 }
 
 func imin(X ...int) int {
+	if len(X) == 0 {
+		return 0
+	}
 	min := X[0]
 	for _, x := range X[1:] {
 		chmin(&min, x)
@@ -165,9 +171,7 @@ func gcd(a, b int) int {
 	return gcd(b, a%b)
 }
 
-func lcm(a, b int) int {
-	return a * b / gcd(a, b)
-}
+func lcm(a, b int) int { return a * b / gcd(a, b) }
 
 func ifact(x int) int {
 	f := 1
@@ -215,7 +219,4 @@ func factor(n int) map[int]int {
 	return m
 }
 
-func isPrime(n int) bool {
-	f := factor(n)
-	return len(f) == 1 && f[n] == 1
-}
+func isPrime(n int) bool { f := factor(n); return len(f) == 1 && f[n] == 1 }
