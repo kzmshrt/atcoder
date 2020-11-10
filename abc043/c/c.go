@@ -21,13 +21,12 @@ func main() {
 		As[i] = scan.Int()
 		sum += As[i]
 	}
-	mean := float64(sum) / float64(N)
-	a, b := 0, 0
+	mean := int(math.Round(float64(sum) / float64(N)))
+	ans := 0
 	for _, A := range As {
-		a += ipow(int(math.Floor(mean))-A, 2)
-		b += ipow(int(math.Ceil(mean))-A, 2)
+		ans += ipow(mean-A, 2)
 	}
-	fmt.Println(imin(a, b))
+	fmt.Println(ans)
 }
 
 func debug(d ...interface{}) { fmt.Fprintln(os.Stderr, d...) }
