@@ -14,18 +14,20 @@ var scan = newScanner(os.Stdin)
 
 func main() {
 	N, M := scan.Int(), scan.Int()
-	m := make([]int, N, N)
+	m := make([]bool, N, N)
 	for i := 0; i < M; i++ {
 		if a, b := scan.Int(), scan.Int(); a == 1 {
-			m[b]++
+			if m[b] {
+				fmt.Println("POSSIBLE")
+				return
+			}
+			m[b] = true
 		} else if b == N {
-			m[a]++
-		}
-	}
-	for _, v := range m {
-		if v >= 2 {
-			fmt.Println("POSSIBLE")
-			return
+			if m[a] {
+				fmt.Println("POSSIBLE")
+				return
+			}
+			m[a] = true
 		}
 	}
 	fmt.Println("IMPOSSIBLE")
