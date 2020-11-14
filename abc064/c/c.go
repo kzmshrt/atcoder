@@ -25,8 +25,7 @@ func main() {
 		}
 	}
 	if c == 0 && m[8] > 0 {
-		c++
-		m[8]--
+		c, m[8] = c+1, m[8]-1
 	}
 	fmt.Println(c, c+m[8])
 }
