@@ -48,14 +48,16 @@ func main() {
 	N := scan.Int()
 	As := make([]int, N+2, N+2)
 	mcs := 0
+	mc := make([]int, N+1, N+1)
 	for i := 1; i < N+2; i++ {
 		if i < N+1 {
 			As[i] = scan.Int()
 		}
-		mcs += iabs(As[i] - As[i-1])
+		mc[i-1] = iabs(As[i-1] - As[i])
+		mcs += mc[i-1]
 	}
 	for i := 1; i < N+1; i++ {
-		fmt.Println(mcs - iabs(As[i-1]-As[i]) - iabs(As[i]-As[i+1]) + iabs(As[i-1]-As[i+1]))
+		fmt.Println(mcs - mc[i-1] - mc[i] + iabs(As[i-1]-As[i+1]))
 	}
 }
 
