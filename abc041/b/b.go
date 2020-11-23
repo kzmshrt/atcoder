@@ -13,11 +13,21 @@ import (
 var in = newScanner(os.Stdin)
 
 func main() {
-	A, B, C := newMint(in.Int()), newMint(in.Int()), newMint(in.Int())
+	A, B, C := in.Mint(), in.Mint(), in.Mint()
 	out(A.Mul(B).Mul(C))
 }
 
 type mint int
+
+func (s *scanner) Mint() mint { return newMint(s.Int()) }
+
+func (s *scanner) Mints(n int) []mint {
+	a := make([]mint, n, n)
+	for i := range a {
+		a[i] = s.Mint()
+	}
+	return a
+}
 
 var mod = 1000000007
 
