@@ -10,10 +10,10 @@ import (
 	"strconv"
 )
 
-var sc = newScanner(os.Stdin)
+var in = newScanner(os.Stdin)
 
 func main() {
-	out(string(sc.String()[sc.Int()-1]))
+	out(string(in.String()[in.Int()-1]))
 }
 
 func out(d ...interface{}) { fmt.Fprintln(os.Stdout, d...) }
