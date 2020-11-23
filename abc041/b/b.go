@@ -13,7 +13,8 @@ import (
 var in = newScanner(os.Stdin)
 
 func main() {
-	out(newMint(1).Mul(newMint(in.Int())).Mul(newMint(in.Int())).Mul(newMint(in.Int())))
+	A, B, C := newMint(in.Int()), newMint(in.Int()), newMint(in.Int())
+	out(A.Mul(B).Mul(C))
 }
 
 type mint int
