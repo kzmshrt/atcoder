@@ -26,7 +26,7 @@ func main() {
 			c += v
 		}
 	}
-	fmt.Println(c)
+	out(c)
 }
 
 func out(d ...interface{}) { fmt.Fprintln(os.Stdout, d...) }
