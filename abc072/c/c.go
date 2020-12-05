@@ -1,4 +1,4 @@
-//go:generate echo "https://atcoder.jp/contests/abc076/tasks/abc076_c"
+//go:generate echo "https://atcoder.jp/contests/abc072/tasks/arc082_a"
 package main
 
 import (
@@ -8,42 +8,20 @@ import (
 	"math/big"
 	"os"
 	"strconv"
-	"strings"
 )
 
 var in = newScanner(os.Stdin)
 
 func main() {
-	Sd, T := in.String(), in.String()
-	s := strings.Repeat("z", len(Sd)+1)
-	for i := 0; i < len(Sd)-len(T)+1; i++ {
-		ts := make([]byte, len(Sd), len(Sd))
-		if 0 < i {
-			copy(ts[0:i], strings.ReplaceAll(Sd[0:i], "?", "a"))
-		}
-		if i < len(Sd)-len(T)-1 {
-			copy(ts[i+len(T):], strings.ReplaceAll(Sd[i+len(T):], "?", "a"))
-		}
-		restorable := true
-		for j := range T {
-			if Sd[i+j] != '?' && Sd[i+j] != T[j] {
-				restorable = false
-				break
-			}
-			ts[i+j] = T[j]
-		}
-		if !restorable {
-			continue
-		}
-		if string(ts) < s {
-			s = string(ts)
-		}
+	N := in.Int()
+	m := make([]int, 100002, 100002)
+	for i := 0; i < N; i++ {
+		a := in.Int()
+		m[a]++
+		m[a+1]++
+		m[a+2]++
 	}
-	if len(s) == len(Sd)+1 {
-		fmt.Println("UNRESTORABLE")
-	} else {
-		fmt.Println(s)
-	}
+	fmt.Println(imax(m...))
 }
 
 func debug(d ...interface{}) { fmt.Fprintln(os.Stderr, d...) }
