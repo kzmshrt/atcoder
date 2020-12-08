@@ -11,9 +11,13 @@ import (
 	"strconv"
 )
 
+func main() {
+	solve1()
+}
+
 var in = newScanner(os.Stdin)
 
-func main() {
+func solve1() {
 	N := in.Int()
 	fl := factorList(N)
 	min := math.MaxInt32
