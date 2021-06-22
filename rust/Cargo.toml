@@ -5,12 +5,16 @@ authors = ["Kazumasa Hirata <p.m.byzance0817@gmail.com>"]
 edition = "2018"
 
 [[bin]]
-name = "proconio"
-path = "src/proconio.rs"
+name = "if"
+path = "src/if.rs"
 
 [[bin]]
 name = "literal"
 path = "src/literal.rs"
+
+[[bin]]
+name = "proconio"
+path = "src/proconio.rs"
 
 [dependencies]
 #num = "=0.2.1"
