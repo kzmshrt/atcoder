@@ -8,6 +8,10 @@ edition = "2018"
 name = "proconio"
 path = "src/proconio.rs"
 
+[[bin]]
+name = "literal"
+path = "src/literal.rs"
+
 [dependencies]
 #num = "=0.2.1"
 #num-bigint = "=0.2.6"
