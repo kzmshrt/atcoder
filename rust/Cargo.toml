@@ -24,6 +24,10 @@ path = "src/literal.rs"
 name = "proconio"
 path = "src/proconio.rs"
 
+[[bin]]
+name = "tuple"
+path = "src/tuple.rs"
+
 [dependencies]
 #num = "=0.2.1"
 #num-bigint = "=0.2.6"
