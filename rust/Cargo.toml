@@ -29,6 +29,10 @@ name = "proconio"
 path = "src/proconio.rs"
 
 [[bin]]
+name = "reference"
+path = "src/reference.rs"
+
+[[bin]]
 name = "strfmt"
 path = "src/strfmt.rs"
 
