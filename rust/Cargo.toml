@@ -29,6 +29,10 @@ name = "proconio"
 path = "src/proconio.rs"
 
 [[bin]]
+name = "strfmt"
+path = "src/strfmt.rs"
+
+[[bin]]
 name = "tuple"
 path = "src/tuple.rs"
 
