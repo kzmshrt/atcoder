@@ -5,6 +5,10 @@ authors = ["Kazumasa Hirata <p.m.byzance0817@gmail.com>"]
 edition = "2018"
 
 [[bin]]
+name = "array"
+path = "src/array.rs"
+
+[[bin]]
 name = "assert"
 path = "src/assert.rs"
 
