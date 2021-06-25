@@ -46,4 +46,14 @@ fn main() {
     assert_eq!(copied, 100);
     println!("foo:    {:p}", &foo);
     println!("copied: {:p}", &copied);
+
+    // 静的なライフタイム
+    // - 整数リテラルのようなリテラルも借用できる
+    // - リテラルの借用は、「プログラム開始から終了までずっと続く変数」への参照とみなせる == 「静的なライフタイムをもつ」
+    // - 静的なライフタイムをもつ参照は、プログラム終了までずっと使える
+    let reference;
+    {
+        reference = &100;
+    }
+    assert_eq!(*reference, 100);
 }
