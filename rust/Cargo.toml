@@ -17,6 +17,10 @@ name = "block_and_scope"
 path = "src/block_and_scope.rs"
 
 [[bin]]
+name = "for"
+path = "src/for.rs"
+
+[[bin]]
 name = "if"
 path = "src/if.rs"
 
