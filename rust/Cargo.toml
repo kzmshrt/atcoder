@@ -6,47 +6,51 @@ edition = "2018"
 
 [[bin]]
 name = "array"
-path = "src/array.rs"
+path = "src/basic/array.rs"
 
 [[bin]]
 name = "assert"
-path = "src/assert.rs"
+path = "src/basic/assert.rs"
 
 [[bin]]
 name = "block_and_scope"
-path = "src/block_and_scope.rs"
+path = "src/basic/block_and_scope.rs"
 
 [[bin]]
 name = "for"
-path = "src/for.rs"
+path = "src/basic/for.rs"
 
 [[bin]]
 name = "if"
-path = "src/if.rs"
+path = "src/basic/if.rs"
 
 [[bin]]
 name = "literal"
-path = "src/literal.rs"
+path = "src/basic/literal.rs"
 
 [[bin]]
 name = "pattern_match"
-path = "src/pattern_match.rs"
+path = "src/basic/pattern_match.rs"
 
 [[bin]]
 name = "proconio"
-path = "src/proconio.rs"
+path = "src/basic/proconio.rs"
 
 [[bin]]
 name = "reference"
-path = "src/reference.rs"
+path = "src/basic/reference.rs"
 
 [[bin]]
 name = "strfmt"
-path = "src/strfmt.rs"
+path = "src/basic/strfmt.rs"
 
 [[bin]]
 name = "tuple"
-path = "src/tuple.rs"
+path = "src/basic/tuple.rs"
+
+[[bin]]
+name = "recursion:sum"
+path = "src/recursion/sum.rs"
 
 [dependencies]
 #num = "=0.2.1"
