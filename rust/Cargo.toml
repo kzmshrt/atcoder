@@ -53,6 +53,10 @@ name = "strfmt"
 path = "src/strfmt.rs"
 
 [[bin]]
+name = "tribonacci"
+path = "src/tribonacci.rs"
+
+[[bin]]
 name = "tuple"
 path = "src/tuple.rs"
 
