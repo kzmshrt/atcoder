@@ -33,6 +33,10 @@ name = "literal"
 path = "src/literal.rs"
 
 [[bin]]
+name = "mutable"
+path = "src/mutable.rs"
+
+[[bin]]
 name = "partial_sum"
 path = "src/partial_sum.rs"
 
