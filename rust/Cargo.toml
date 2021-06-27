@@ -72,6 +72,10 @@ path = "src/tribonacci.rs"
 name = "tuple"
 path = "src/tuple.rs"
 
+[[bin]]
+name = "vector"
+path = "src/vector.rs"
+
 [dependencies]
 #num = "=0.2.1"
 #num-bigint = "=0.2.6"
