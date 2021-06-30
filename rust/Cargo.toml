@@ -33,6 +33,10 @@ name = "literal"
 path = "src/literal.rs"
 
 [[bin]]
+name = "loop"
+path = "src/loop.rs"
+
+[[bin]]
 name = "mutable_reference"
 path = "src/mutable_reference.rs"
 
