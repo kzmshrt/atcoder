@@ -65,6 +65,10 @@ name = "reference"
 path = "src/reference.rs"
 
 [[bin]]
+name = "slice"
+path = "src/slice.rs"
+
+[[bin]]
 name = "strfmt"
 path = "src/strfmt.rs"
 
