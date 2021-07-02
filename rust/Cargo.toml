@@ -53,6 +53,10 @@ name = "pattern_match"
 path = "src/pattern_match.rs"
 
 [[bin]]
+name = "pattern_match_and_condition"
+path = "src/pattern_match_and_condition.rs"
+
+[[bin]]
 name = "proconio"
 path = "src/proconio.rs"
 
