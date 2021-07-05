@@ -45,6 +45,10 @@ name = "mutable_variable"
 path = "src/mutable_variable.rs"
 
 [[bin]]
+name = "ownership"
+path = "src/ownership.rs"
+
+[[bin]]
 name = "partial_sum"
 path = "src/partial_sum.rs"
 
