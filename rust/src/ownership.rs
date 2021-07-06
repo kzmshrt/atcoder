@@ -20,6 +20,7 @@ fn main() {
     practice_move();
     practice_borrow();
     practice_drop();
+    practice_unmovable();
 }
 
 fn practice_move() {
@@ -81,4 +82,94 @@ fn practice_drop() {
             let moved = vector;
         } // drop value of moved
     }
+}
+
+fn practice_unmovable() {
+    let vector: Vec<Vec<i32>> = vec![vec![2, 3, 4], vec![1], vec![0; 5]];
+    for i in &vector[0] {
+        println!("{}", i);
+    }
+
+    // for では in のあとに &[T; N] や &Vec<T> や &[T] を置くと、各要素への参照 &T が走査される
+    // だから、これは可能
+    for i in &vector {
+        for j in i {
+            print!("{} ", j);
+        }
+        println!();
+    }
+    // でも、これは不可能
+    // data moved here
+    // move occurs because `i` has type `std::vec::Vec<i32>`, which does not implement the `Copy` trait
+    // for &i in &vector {
+    //     for j in i {
+    //         print!("{} ", j);
+    //     }
+    //     println!()
+    // }
+
+    // Vec<T> の T がコピー可能でない場合、ベクタから要素だけをムーブすることはできない
+    // 変数 vector は常に、「ベクタ全体への所有権を持っている」あるいは「一切所有権を持っていない」のどちらかの状態にしかなりえない
+    // let vector: Vec<Vec<i32>> = vec![vec![2, 3, 4], vec![1], vec![0; 5]];
+    // let moved = vector[0];
+
+    // 参照
+    // 変数が借用されている間はムーブできない
+    // 借用中にムーブが起きると、参照の指す先がなくなってしまうため
+    // let vector = vec![1, 2, 3];
+    // let reference = &vector;     // 借用
+    // let moved = vector;          // ムーブ不可能
+    // println!("{:?}", reference); // ライフタイム終了
+
+    // タプル
+    // タプルの要素にコピー不可能なものが含まれている場合は、タプル自体もコピー不可能
+    // let tuple: (String, f64) = ("hello".to_string(), 0.1); // String はコピー不可能
+    // let moved = tuple; // ムーブ
+
+    // タプルの作成時にもムーブが発生する
+    // let hello = "hello".to_string();
+    // let tuple: (String, f64) = (hello, 0.1); // hello がムーブされる
+    // println!("{}", hello); // エラー
+
+    // 部分的なムーブ
+    // タプルの一部だけをムーブすることができる
+    let tuple: (String, f64) = ("hello".to_string(), 0.1);
+    let hello = tuple.0;
+    // 一部の要素がムーブされても残りの要素は使用することができる
+    assert_eq!(tuple.1, 0.1);
+    // タプル全体を使用することはできなくなる
+    // let reference = &tuple;
+
+    // ワイルドカードパターン
+    // `_` への代入は使用に含まれず、ムーブも発生しない
+    let hello = "hello".to_string();
+    let _ = hello;
+    println!("{}", hello);
+
+    // ブロックが返す値とムーブ
+    // ブロックが値を返す際にもムーブが発生する
+    let power_of_2 = {
+        let mut v = vec![1];
+        for i in 0..4 {
+            v.push(v[i] * 2);
+        }
+        v
+    };
+    assert_eq!(power_of_2, vec![1, 2, 4, 8, 16]);
+
+    // ループとムーブ
+    // 1回目のループで、ベクタの値が vector から moved にムーブされる → moved はそのままスコープが終了し、ベクタをドロップしてしまう
+    // 2回目のループで、所有権を持っていない vector を使用しようとすることになる → エラー
+    // let vector: Vec<i32> = Vec::new();
+    // for _ in 0..10 {
+    //     let moved = vector;
+    // }
+    // 逆に、ループの中で vector に再び所有権を与えれば問題は発生しない
+    let mut vector: Vec<i32> = Vec::new();
+    for _ in 0..10 {
+        let mut moved = vector;
+        moved.push(0);
+        vector = moved;
+    }
+    assert_eq!(vector, vec![0; 10]);
 }
