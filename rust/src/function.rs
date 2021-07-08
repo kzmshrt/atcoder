@@ -1,5 +1,5 @@
 fn main() {
-    // 引数を取らない関数
+    // 引数をとらない関数
     let vec = {
         let mut v = Vec::new();
         for i in 0..10 {
@@ -51,4 +51,37 @@ fn main() {
             println!("{}", c);
         }
     }
+
+    // 引数をとる関数
+    fn iota(a: i32, b: i32) -> Vec<i32> {
+        let mut v = Vec::new();
+        for i in a..b {
+            v.push(i);
+        }
+        v
+    }
+    let vec = iota(3, 6);
+    assert_eq!(vec, [3, 4, 5]);
+    let vec = iota(0, 10);
+    assert_eq!(vec, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    // 関数の引数定義でもパターンが使える
+    fn swap((a, b): (i32, i32)) -> (i32, i32) {
+        (b, a)
+    }
+    assert_eq!(swap((0, 1)), (1, 0));
+
+    // 不変引数と可変引数
+    // 不変
+    fn double(x: i32) -> i32 {
+        x * x
+    }
+    let var = 5;
+    assert_eq!(double(var), 25);
+    // 可変
+    fn double_mut(mut x: i32) -> i32 {
+        x *= x; // 書き換わるのはあくまでも double_mut 関数の環境にある変数 x であり、main 関数の環境にある変数 var は変化しない
+        x
+    }
+    assert_eq!(double_mut(5), 25);
 }
