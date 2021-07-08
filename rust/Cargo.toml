@@ -25,6 +25,10 @@ name = "for"
 path = "src/for.rs"
 
 [[bin]]
+name = "function"
+path = "src/function.rs"
+
+[[bin]]
 name = "if"
 path = "src/if.rs"
 
