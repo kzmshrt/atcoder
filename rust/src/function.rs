@@ -84,4 +84,22 @@ fn main() {
         x
     }
     assert_eq!(double_mut(5), 25);
+
+    // return 式
+    assert_eq!(minimum_factor(2021), 43);
+
+    // 標準ライブラリ
+    assert_eq!(std::cmp::max(2, 5), 5);
+    assert_eq!(std::cmp::min(2, 5), 2);
+}
+
+fn minimum_factor(n: i32) -> i32 {
+    for i in 2.. {
+        if i * i > n {
+            break;
+        } else if n % i == 0 {
+            return i;
+        }
+    }
+    n
 }
