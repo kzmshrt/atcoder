@@ -57,6 +57,10 @@ name = "partial_sum"
 path = "src/partial_sum.rs"
 
 [[bin]]
+name = "pass_by_reference"
+path = "src/pass_by_reference.rs"
+
+[[bin]]
 name = "pattern_match"
 path = "src/pattern_match.rs"
 
