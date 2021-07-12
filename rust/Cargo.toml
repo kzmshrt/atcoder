@@ -49,6 +49,10 @@ name = "mutable_variable"
 path = "src/mutable_variable.rs"
 
 [[bin]]
+name = "operator"
+path = "src/operator.rs"
+
+[[bin]]
 name = "ownership"
 path = "src/ownership.rs"
 
