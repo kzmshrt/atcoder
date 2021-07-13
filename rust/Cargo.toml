@@ -81,6 +81,10 @@ name = "recursion_sum"
 path = "src/recursion_sum.rs"
 
 [[bin]]
+name = "recursive_function"
+path = "src/recursive_function.rs"
+
+[[bin]]
 name = "reference"
 path = "src/reference.rs"
 
