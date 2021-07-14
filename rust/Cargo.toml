@@ -37,6 +37,10 @@ name = "if"
 path = "src/if.rs"
 
 [[bin]]
+name = "lifetime_parameter"
+path = "src/lifetime_parameter.rs"
+
+[[bin]]
 name = "literal"
 path = "src/literal.rs"
 
