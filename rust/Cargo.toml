@@ -53,6 +53,10 @@ name = "operator"
 path = "src/operator.rs"
 
 [[bin]]
+name = "operator_bit"
+path = "src/operator_bit.rs"
+
+[[bin]]
 name = "ownership"
 path = "src/ownership.rs"
 
