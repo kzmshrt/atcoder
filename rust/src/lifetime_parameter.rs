@@ -10,6 +10,7 @@
 ///
 fn main() {
     practice_lifetime_parameter();
+    practice_static_lifetime_parameter();
 }
 
 fn practice_lifetime_parameter() {
@@ -59,4 +60,19 @@ fn practice_lifetime_parameter() {
         result = increasing(slice);
     }
     assert_eq!(result, &[2, 4, 7, 8]);
+}
+
+fn practice_static_lifetime_parameter() {
+    fn ordinal_suffix(number: u32) -> &'static str {
+        match (number % 10, number % 100) {
+            (_, 11..=13) => "th",
+            (1, _) => "st",
+            (2, _) => "nd",
+            (3, _) => "rd",
+            _ => "th",
+        }
+    }
+
+    println!("{}{}", 100, ordinal_suffix(100));
+    println!("{}{}", 33, ordinal_suffix(33));
 }
