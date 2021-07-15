@@ -37,7 +37,26 @@ fn practice_lifetime_parameter() {
         ret
     }
 
+    // 引数として &vec を渡し、返り値を result に代入する
+    // increasing の引数と返り値のライフタイムは同じ → result のライフタイムは vec のスコープ終了まで
     let vec = vec![2, 4, 7, 8, 6, 3, 5];
     let result = increasing(&vec);
+    assert_eq!(result, &[2, 4, 7, 8]);
+
+    // 以下はコンパイルエラー
+    // let result;
+    // {
+    //     let vec = vec![2, 4, 7, 8, 6, 3, 5];
+    //     result = increasing(&vec);
+    // }
+    // assert_eq!(result, &[2, 4, 7, 8]);
+
+    // 参照型の変数のスコープが終了しても、参照型が指している値のライフタイムは存続できる
+    let vec = vec![2, 4, 7, 8, 6, 3, 5];
+    let result;
+    {
+        let slice = &vec[..];
+        result = increasing(slice);
+    }
     assert_eq!(result, &[2, 4, 7, 8]);
 }
